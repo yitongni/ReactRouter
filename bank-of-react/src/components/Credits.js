@@ -4,17 +4,17 @@ import { Redirect } from 'react-router-dom'
 import {Link} from 'react-router-dom';
 import AccountBalance from './AccountBalance';
 
-class Debits extends Component {
+class Credits extends Component {
     constructor () {
         super()
         this.state = {
-            debitTotal: 0,
+            creditTotal: 0,
             data: []
         }
     }
 
     componentDidMount(){
-        fetch('https://moj-api.herokuapp.com/debits', {method: "GET"}) 
+        fetch('https://moj-api.herokuapp.com/credits', {method: "GET"}) 
         .then(res => res.json())
         .then(data => {
             //console.log(data)
@@ -25,11 +25,13 @@ class Debits extends Component {
                     totalspent+=element.amount;
                 });
                 console.log(totalspent);
-                this.setState( {debitTotal: totalspent}, function(){
-                    console.log(this.state.debitTotal);
+                this.setState( {creditTotal: totalspent}, function(){
+                    console.log(this.state.creditTotal);
                 });
             })
         }).catch(error => { throw (error) })
+
+        
     }
     render() {
         let debits=this.state.data.map(item=>(
@@ -39,10 +41,11 @@ class Debits extends Component {
                     <td>{(item.date)}</td>
                 </tr>
         ))
+        
         return (
             <div>
-                <h1>Debits</h1>
-                <table id="debitTable">
+                <h1>Credits</h1>
+                <table id="creditsTable">
                     <thead>
                         <tr>
                             <th>Description</th>
@@ -62,4 +65,4 @@ class Debits extends Component {
     }
 }
 
-export default Debits;
+export default Credits;
